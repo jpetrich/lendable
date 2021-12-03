@@ -5,9 +5,6 @@ describe("ERC721Lendable Test Suite", function() {
     const expect = chai.expect;
     chai.use(chaiAsPromised);
     const { ethers } = require('hardhat');
-    const utils = require('ethers').utils;
-    const { assert } = require('assert');
-
 
     before(async function() {
         
