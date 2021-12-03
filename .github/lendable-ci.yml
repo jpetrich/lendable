@@ -1,0 +1,28 @@
+# CI workflow for lendable
+
+name: Lendable CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup environment
+        run: npm install
+
+      - name: Build contracts
+        run: npx hardhat compile --config ./hardhat-ci.config.js
+
+      - name: Run unit tests
+        run: npx hardhat test --config ./hardhat-ci.config.js
+        
+      - name: Cleanup environment
+        run: rm package-lock.json; rm -r artifacts; rm -r .openzeppelin
