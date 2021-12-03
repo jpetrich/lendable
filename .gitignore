@@ -1,0 +1,8 @@
+.DS_Store
+.env
+.git
+.openzeppelin
+
+artifacts
+cache
+node_modules
