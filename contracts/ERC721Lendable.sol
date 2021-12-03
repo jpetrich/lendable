@@ -22,6 +22,26 @@ contract ERC721Lendable is ERC721 {
     }
 
     /**
+     * @dev Prevents the borrower from transferring a token except back to the lender.
+     */
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data) virtual public override {
+        require(from == _lenders[tokenId] || to == _lenders[tokenId], 'Transfer of a borrowed token except to the lender is not allowed.');
+        super.safeTransferFrom(from, to, tokenId, data);
+    }
+
+    /**
+     * @dev Prevents the borrower from transferring a token except back to the lender.
+     */
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) public virtual override {
+        require(from == _lenders[tokenId] || to == _lenders[tokenId], 'Transfer of a borrowed token except to the lender is not allowed.');
+        super.transferFrom(from, to, tokenId);
+    }
+
+    /**
     * @dev Mints a token to the specified address, initially setting the lender
     to the `to` address for `tokenId`
      */
@@ -30,10 +50,21 @@ contract ERC721Lendable is ERC721 {
         _lenders[tokenId] = to;
     }
 
-    function transferLenderRecordFrom(address from, address to, uint256 tokenId) public {
+    /**
+     * @dev Transfers ownership and the lender role to the `to` address.
+     */
+    function transferWithFullRightsFrom(address from, address to, uint256 tokenId) public {
         require(_lenders[tokenId] == from, 'Token is not registered to the specified lender');
         require(msg.sender == from, 'Sender is not the specified lender');
+        transferFrom(from, to, tokenId);
         _lenders[tokenId] = to;
+    }
+
+    /**
+     * @dev Find the lender of the specified token.
+     */
+    function lenderOf(uint256 tokenId) public view returns (address) {
+        return _lenders[tokenId];
     }
 
     /**
