@@ -25,4 +25,4 @@ jobs:
         run: npx hardhat test --config ./hardhat-ci.config.js
         
       - name: Cleanup environment
-        run: rm package-lock.json; rm -r artifacts; rm -r .openzeppelin
+        run: rm package-lock.json; rm -r artifacts;
