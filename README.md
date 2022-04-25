@@ -7,3 +7,5 @@ This is a demonstration repository for a proposed new contract standard for lend
 The test suite in ERCLendable.test.js demonstrates the basic functionality. Before attempting to make this contract a standard, the following behavior should be considered:
 
 * A method to retrieve the balance of a given lender, even of tokens not currently in the lender's wallet
+
+Many thanks to [@GregJessner](https://twitter.com/GregJessner) of [Narval](https://narval.xyz) who inspired this idea.
